@@ -36,6 +36,7 @@
 		58FB7DEA2D6F618200CC3ADC /* OpenCL_project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenCL_project; sourceTree = BUILT_PRODUCTS_DIR; };
 		58FB7DF52D6F61F300CC3ADC /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
 		58FB7E2A2D70C8A100CC3ADC /* Environment */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Environment; sourceTree = BUILT_PRODUCTS_DIR; };
+		58FB7E352D717E9E00CC3ADC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -79,6 +80,7 @@
 		58FB7DE12D6F618200CC3ADC = {
 			isa = PBXGroup;
 			children = (
+				58FB7E352D717E9E00CC3ADC /* README.md */,
 				58FB7DEC2D6F618200CC3ADC /* OpenCL_project */,
 				58FB7E2B2D70C8A100CC3ADC /* Environment */,
 				58FB7DF42D6F61F300CC3ADC /* Frameworks */,

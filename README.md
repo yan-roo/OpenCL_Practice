@@ -13,6 +13,7 @@ This tutorial will guide you from scratch on how to use OpenCL in the Xcode envi
 6. [Link Binary with Libraries](#6-link-binary-with-libraries)
 7. [Setting the OpenCL Version](#7-setting-the-opencl-version)
 8. [Compilation and Testing](#8-compilation-and-testing)
+   - [8.1. (Optional) Setting a Custom Working Directory](#81-optional-setting-a-custom-working-directory) 
 9. [Limitations of Xcode for OpenCL Versions](#9-limitations-of-xcode-for-opencl-versions)
 10. [FAQ and Additional Information](#10-faq-and-additional-information)
 
@@ -126,10 +127,17 @@ int main() {
     return 0;
 }
 ```
-1.    Select the corresponding Target in the Scheme menu.
-2.    Click **Run (▶)** or choose **Product → Run**.
-3.    If the code compiles successfully and the Console displays “Hello, OpenCL!” along with platform information, the setup is complete.
+1. Select the corresponding Target in the Scheme menu.
+2. Click **Run (▶)** or choose **Product → Run**.
+3. If the code compiles successfully and the Console displays “Hello, OpenCL!” along with platform information, the setup is complete.
 
+### 8.1. (Optional) Setting a Custom Working Directory
+
+If you need to load external files (like `.cl` kernels) at runtime, Xcode’s default working directory may not be where your files are located. You can:
+1. Go to **Product → Scheme → Edit Scheme…**.
+2. In the left panel, select Run. Then click the **Options** tab on the right.
+3. Enable Use **custom working directory** and set it to a folder containing your `.cl` files (e.g., `$(PROJECT_DIR)`).
+4. This ensures that when your program runs, it can find files such as `simple_add.cl` using a relative path (e.g., "`simple_add.cl`" or "`Environment/simple_add.cl`").
 ---
 
 ## 9. Limitations of Xcode for OpenCL Versions

@@ -7,11 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		584E13862D734A46001E4425 /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FB7DF52D6F61F300CC3ADC /* OpenCL.framework */; };
 		58FB7DF62D6F61F300CC3ADC /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FB7DF52D6F61F300CC3ADC /* OpenCL.framework */; };
 		58FB7E342D70CAAB00CC3ADC /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58FB7DF52D6F61F300CC3ADC /* OpenCL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		584E13732D734A27001E4425 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		58FB7DE82D6F618200CC3ADC /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		584E13752D734A27001E4425 /* VecAddCompare */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VecAddCompare; sourceTree = BUILT_PRODUCTS_DIR; };
 		58FB7DEA2D6F618200CC3ADC /* OpenCL_project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = OpenCL_project; sourceTree = BUILT_PRODUCTS_DIR; };
 		58FB7DF52D6F61F300CC3ADC /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
 		58FB7E2A2D70C8A100CC3ADC /* Environment */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Environment; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -40,6 +51,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		584E13762D734A27001E4425 /* VecAddCompare */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VecAddCompare;
+			sourceTree = "<group>";
+		};
 		58FB7DEC2D6F618200CC3ADC /* OpenCL_project */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = OpenCL_project;
@@ -58,6 +74,14 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		584E13722D734A27001E4425 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				584E13862D734A46001E4425 /* OpenCL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		58FB7DE72D6F618200CC3ADC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -83,6 +107,7 @@
 				58FB7E352D717E9E00CC3ADC /* README.md */,
 				58FB7DEC2D6F618200CC3ADC /* OpenCL_project */,
 				58FB7E2B2D70C8A100CC3ADC /* Environment */,
+				584E13762D734A27001E4425 /* VecAddCompare */,
 				58FB7DF42D6F61F300CC3ADC /* Frameworks */,
 				58FB7DEB2D6F618200CC3ADC /* Products */,
 				58FB7E332D70C8AB00CC3ADC /* CL */,
@@ -94,6 +119,7 @@
 			children = (
 				58FB7DEA2D6F618200CC3ADC /* OpenCL_project */,
 				58FB7E2A2D70C8A100CC3ADC /* Environment */,
+				584E13752D734A27001E4425 /* VecAddCompare */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -109,6 +135,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		584E13742D734A27001E4425 /* VecAddCompare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 584E13792D734A27001E4425 /* Build configuration list for PBXNativeTarget "VecAddCompare" */;
+			buildPhases = (
+				584E13712D734A27001E4425 /* Sources */,
+				584E13722D734A27001E4425 /* Frameworks */,
+				584E13732D734A27001E4425 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				584E13762D734A27001E4425 /* VecAddCompare */,
+			);
+			name = VecAddCompare;
+			packageProductDependencies = (
+			);
+			productName = VecAddCompare;
+			productReference = 584E13752D734A27001E4425 /* VecAddCompare */;
+			productType = "com.apple.product-type.tool";
+		};
 		58FB7DE92D6F618200CC3ADC /* OpenCL_project */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 58FB7DF12D6F618200CC3ADC /* Build configuration list for PBXNativeTarget "OpenCL_project" */;
@@ -163,6 +211,9 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					584E13742D734A27001E4425 = {
+						CreatedOnToolsVersion = 16.2;
+					};
 					58FB7DE92D6F618200CC3ADC = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -187,11 +238,19 @@
 			targets = (
 				58FB7DE92D6F618200CC3ADC /* OpenCL_project */,
 				58FB7E292D70C8A100CC3ADC /* Environment */,
+				584E13742D734A27001E4425 /* VecAddCompare */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		584E13712D734A27001E4425 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		58FB7DE62D6F618200CC3ADC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -209,6 +268,24 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		584E137A2D734A27001E4425 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/**";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		584E137B2D734A27001E4425 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/**";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		58FB7DEF2D6F618200CC3ADC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -363,6 +440,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		584E13792D734A27001E4425 /* Build configuration list for PBXNativeTarget "VecAddCompare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				584E137A2D734A27001E4425 /* Debug */,
+				584E137B2D734A27001E4425 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		58FB7DE52D6F618200CC3ADC /* Build configuration list for PBXProject "OpenCL_project" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

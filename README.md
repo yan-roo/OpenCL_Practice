@@ -1,19 +1,19 @@
 # Tutorial: Setting Up and Using OpenCL in Xcode
-
-This tutorial will guide you from scratch on how to use OpenCL in the Xcode environment on macOS, using the C++ wrapper (`opencl.hpp`) as an example. The ultimate goal is to compile and run an OpenCL program in Xcode.
-
+_(Including Installation and Configuration for OpenCV C++)_
+This tutorial will guide you from scratch on how to use OpenCL in an Xcode environment on macOS using the C++ wrapper (e.g., `opencl.hpp`) as an example. Additionally, it covers how to install and integrate the OpenCV C++ package. The ultimate goal is to compile and run a program that utilizes both OpenCL and OpenCV in Xcode.
 ---
 
 ## Table of Contents
 1. [Prerequisites](#1-prerequisites)
 2. [Creating an Xcode Project](#2-creating-an-xcode-project)
+- [2.1. (Optional) Installing OpenCV via Homebrew](#21-optional-installing-opencv-via-homebrew)
 3. [Creating or Adding a Target](#3-creating-or-adding-a-target)
 4. [Adding the OpenCL C++ Wrapper (cl.hpp or opencl.hpp)](#4-adding-the-opencl-c-wrapper-clhpp-or-openclhpp)
 5. [Setting Header Search Paths](#5-setting-header-search-paths)
-6. [Link Binary with Libraries](#6-link-binary-with-libraries)
+6. [Setting Library Search Paths & Linking Binary With Libraries](#6-setting-library-search-paths-and-linking-binary-with-libraries)
 7. [Setting the OpenCL Version](#7-setting-the-opencl-version)
 8. [Compilation and Testing](#8-compilation-and-testing)
-   - [8.1. (Optional) Setting a Custom Working Directory](#81-optional-setting-a-custom-working-directory) 
+- [8.1. (Optional) Setting a Custom Working Directory](#81-optional-setting-a-custom-working-directory) 
 9. [Limitations of Xcode for OpenCL Versions](#9-limitations-of-xcode-for-opencl-versions)
 10. [FAQ and Additional Information](#10-faq-and-additional-information)
 
@@ -23,7 +23,7 @@ This tutorial will guide you from scratch on how to use OpenCL in the Xcode envi
 - **macOS** system (includes OpenCL.framework, supports up to version 1.2).
 - **Xcode** (a newer version is recommended for easier project and target management).
 - **GitHub (optional):** To use the C++ wrapper provided by Khronos, you can obtain it from the [OpenCL-CLHPP](https://github.com/KhronosGroup/OpenCL-CLHPP) repository.
-- **Homebrew (optional):** If you need `clang-format` or other tools, you can install them via Homebrew.
+- **Homebrew (optional):** To install additional tools like `clang-format` or even OpenCV (see below).
 
 ---
 
@@ -36,6 +36,20 @@ This tutorial will guide you from scratch on how to use OpenCL in the Xcode envi
 
 A basic project containing a `main.cpp` file will be generated.
 
+### 2.1. (Optional) Installing OpenCV via Homebrew
+
+If you plan to use OpenCV’s C++ package in your project, you can install it via Homebrew:
+1. Open Terminal and update Homebrew:
+```bash
+brew update
+```
+2. Install OpenCV:
+```bash
+brew install opencv
+```
+
+Homebrew will automatically download and install OpenCV along with all its dependencies. Once installed, the files are stored in `/opt/homebrew/Cellar/opencv/<version>`. Homebrew also creates symlinks in `/opt/homebrew/include` and `/opt/homebrew/lib` to make it easier for compilers and linkers to find the necessary files.
+
 ---
 
 ## 3. Creating or Adding a Target
@@ -45,7 +59,7 @@ If you plan to have multiple executable programs (multiple `main.cpp` files) wit
 2. In the Targets section, click the `+` button and choose **Command Line Tool** or another template.
 3. Name the new Target and complete the setup.
 4. In the project navigator, ensure the corresponding `main.cpp` is checked under **Target Membership**.  
-   - You can do this in the File Inspector by checking or unchecking the appropriate Target.
+- You can do this in the File Inspector by checking or unchecking the appropriate Target.
 
 This allows you to compile and run different `main.cpp` files by switching schemes (using the dropdown menu in the top left).
 
@@ -62,32 +76,47 @@ macOS only includes the C version of OpenCL (`#include <OpenCL/opencl.h>`) and d
 ---
 
 ## 5. Setting Header Search Paths
-Let the compiler know where to find `opencl.hpp`:
-
-1. Select your project → choose your Target → **Build Settings**.
-2. Search for **Header Search Paths**.
-3. Add a new path, for example: `$(PROJECT_DIR)/CL` (Assuming the `CL` folder is at the same level as the `.xcodeproj` file.)
+Header Search Paths tell the compiler where to look for header files (such as `opencl.hpp` or OpenCV headers):
+1.    Select your project → choose your Target → go to **Build Settings**.
+2.    Search for **Header Search Paths**.
+3.    Add a new path, for example:
+- If your OpenCL wrapper is placed in `$(PROJECT_DIR)/CL`, add:
+```
+$(PROJECT_DIR)/CL
+```
+- If you need to include OpenCV headers from Homebrew, also add:
+```
+/opt/homebrew/include
+```
 4. If you need to support subdirectories, set the option to **recursive**.
 
-In your code, you can include the header like this:
+Then in your source code, you can include the headers:
 ```cpp
-#include <CL/opencl.hpp>  // if the file name is opencl.hpp
-
-// or
-
 #include "CL/opencl.hpp"
-
-// (Depending on whether you use angle brackets or quotes, and based on your path settings)
+#include "opencv2/opencv.hpp"
 ```
 
 ---
+## 6. Setting Library Search Paths & Linking Binary With Libraries
+These settings ensure that during the linking phase, the linker finds the correct library files.
 
-## 6. Link Binary with Libraries
-On macOS, OpenCL is provided as OpenCL.framework, which must be linked manually:
-
+### Library Search Paths
+1.    In your Target’s Build Settings, search for Library Search Paths.
+2.    Add the following path:
+```
+/opt/homebrew/lib
+```
+This directory contains the Homebrew-managed symlinks to the actual library files (including OpenCV libraries).
+### Link Binary With Libraries
 1.    Select your Target → **Build Phases** → **Link Binary With Libraries**.
-2.    Click the + button, search for OpenCL.framework, and add it.
-3.    Ensure that the framework appears in the list for that phase.
+2.    Click the + button and add:
+- OpenCL.framework (which is provided by macOS).
+- For OpenCV: Click **Add Other…**, navigate to `/opt/homebrew/lib`, and select the specific OpenCV library files you require (e.g., `libopencv_core.dylib, libopencv_imgproc.dylib, etc.).
+
+In summary:
+- **Header Search Paths**: Tells the compiler where to find the header files.
+- **Library Search Paths**: Informs the linker where to look for library files.
+- **Link Binary With Libraries**: Specifies exactly which libraries should be linked into your final executable.
 
 ---
 
@@ -113,18 +142,18 @@ In your main.cpp (or another file), you can try the following simple program:
 #include <CL/opencl.hpp>
 
 int main() {
-    std::cout << "Hello, OpenCL!" << std::endl;
+std::cout << "Hello, OpenCL!" << std::endl;
 
-    // Retrieve platform list
-    std::vector<cl::Platform> platforms;
-    cl::Platform::get(&platforms);
-    if (platforms.empty()) {
-        std::cout << "No OpenCL platforms found." << std::endl;
-        return 1;
-    }
+// Retrieve platform list
+std::vector<cl::Platform> platforms;
+cl::Platform::get(&platforms);
+if (platforms.empty()) {
+std::cout << "No OpenCL platforms found." << std::endl;
+return 1;
+}
 
-    std::cout << "Found " << platforms.size() << " platform(s)." << std::endl;
-    return 0;
+std::cout << "Found " << platforms.size() << " platform(s)." << std::endl;
+return 0;
 }
 ```
 1. Select the corresponding Target in the Scheme menu.
@@ -159,9 +188,8 @@ The native OpenCL.framework on macOS supports only up to version 1.2 and has not
 ---
 
 ## Conclusion
-By following the steps outlined above, you should now be able to set up and run an OpenCL program in Xcode on macOS. Remember to:
-- Place the `opencl.hpp` file in a designated folder (e.g., `CL`) and configure the Header Search Paths accordingly.
-- Link the OpenCL.framework manually.
-- Define the target OpenCL version as 120 to avoid compilation issues.
-
-For further assistance, please refer to the [OpenCL-CLHPP](https://github.com/KhronosGroup/OpenCL-CLHPP) repository or consult the macOS developer community. Happy coding!
+By following the steps outlined above, you should be able to set up and run an OpenCL project in Xcode on macOS with additional integration of the OpenCV C++ package. Remember to:
+-    Install OpenCV via Homebrew (if needed).
+-    Properly configure Header and Library Search Paths in Xcode.
+-    Link the required frameworks and libraries in the Link Binary With Libraries phase.
+-    Define the correct OpenCL version to avoid compatibility issues.

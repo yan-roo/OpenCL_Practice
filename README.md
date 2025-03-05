@@ -1,21 +1,21 @@
 # Tutorial: Setting Up and Using OpenCL in Xcode
-_(Including Installation and Configuration for OpenCV C++)_
-This tutorial will guide you from scratch on how to use OpenCL in an Xcode environment on macOS using the C++ wrapper (e.g., `opencl.hpp`) as an example. Additionally, it covers how to install and integrate the OpenCV C++ package. The ultimate goal is to compile and run a program that utilizes both OpenCL and OpenCV in Xcode.
+
+This tutorial will guide you from scratch on how to use OpenCL in an Xcode environment on macOS using the C++ wrapper (e.g., `opencl.hpp`) as an example.
+
 ---
 
 ## Table of Contents
 1. [Prerequisites](#1-prerequisites)
 2. [Creating an Xcode Project](#2-creating-an-xcode-project)
 - [2.1. (Optional) Installing OpenCV via Homebrew](#21-optional-installing-opencv-via-homebrew)
-3. [Creating or Adding a Target](#3-creating-or-adding-a-target)
-4. [Adding the OpenCL C++ Wrapper (cl.hpp or opencl.hpp)](#4-adding-the-opencl-c-wrapper-clhpp-or-openclhpp)
-5. [Setting Header Search Paths](#5-setting-header-search-paths)
-6. [Setting Library Search Paths & Linking Binary With Libraries](#6-setting-library-search-paths-and-linking-binary-with-libraries)
-7. [Setting the OpenCL Version](#7-setting-the-opencl-version)
-8. [Compilation and Testing](#8-compilation-and-testing)
-- [8.1. (Optional) Setting a Custom Working Directory](#81-optional-setting-a-custom-working-directory) 
-9. [Limitations of Xcode for OpenCL Versions](#9-limitations-of-xcode-for-opencl-versions)
-10. [FAQ and Additional Information](#10-faq-and-additional-information)
+3. [Adding the OpenCL C++ Wrapper (cl.hpp or opencl.hpp)](#3-adding-the-opencl-c-wrapper-clhpp-or-openclhpp)
+4. [Setting Header Search Paths](#4-setting-header-search-paths)
+5. [Setting Library Search Paths & Linking Binary With Libraries](#5-setting-library-search-paths-and-linking-binary-with-libraries)
+6. [Setting the OpenCL Version](#6-setting-the-opencl-version)
+7. [Compilation and Testing](#7-compilation-and-testing)
+- [7.1. (Optional) Setting a Custom Working Directory](#71-optional-setting-a-custom-working-directory) 
+8. [Limitations of Xcode for OpenCL Versions](#8-limitations-of-xcode-for-opencl-versions)
+9. [FAQ and Additional Information](#9-faq-and-additional-information)
 
 ---
 
@@ -48,24 +48,9 @@ brew update
 brew install opencv
 ```
 
-Homebrew will automatically download and install OpenCV along with all its dependencies. Once installed, the files are stored in `/opt/homebrew/Cellar/opencv/<version>`. Homebrew also creates symlinks in `/opt/homebrew/include` and `/opt/homebrew/lib` to make it easier for compilers and linkers to find the necessary files.
-
 ---
 
-## 3. Creating or Adding a Target
-If you plan to have multiple executable programs (multiple `main.cpp` files) within the same project, you can create a separate **Target** for each program:
-
-1. Select the project file (the blue icon on the left).
-2. In the Targets section, click the `+` button and choose **Command Line Tool** or another template.
-3. Name the new Target and complete the setup.
-4. In the project navigator, ensure the corresponding `main.cpp` is checked under **Target Membership**.  
-- You can do this in the File Inspector by checking or unchecking the appropriate Target.
-
-This allows you to compile and run different `main.cpp` files by switching schemes (using the dropdown menu in the top left).
-
----
-
-## 4. Adding the OpenCL C++ Wrapper (cl.hpp or opencl.hpp)
+## 3. Adding the OpenCL C++ Wrapper (cl.hpp or opencl.hpp)
 macOS only includes the C version of OpenCL (`#include <OpenCL/opencl.h>`) and does not provide Khronos's C++ wrapper. Therefore, you need to download it manually.
 
 1. Go to the [OpenCL-CLHPP](https://github.com/KhronosGroup/OpenCL-CLHPP) repository.
@@ -75,7 +60,7 @@ macOS only includes the C version of OpenCL (`#include <OpenCL/opencl.h>`) and d
 
 ---
 
-## 5. Setting Header Search Paths
+## 4. Setting Header Search Paths
 Header Search Paths tell the compiler where to look for header files (such as `opencl.hpp` or OpenCV headers):
 1.    Select your project → choose your Target → go to **Build Settings**.
 2.    Search for **Header Search Paths**.
@@ -97,7 +82,7 @@ Then in your source code, you can include the headers:
 ```
 
 ---
-## 6. Setting Library Search Paths & Linking Binary With Libraries
+## 5. Setting Library Search Paths & Linking Binary With Libraries
 These settings ensure that during the linking phase, the linker finds the correct library files.
 
 ### Library Search Paths
@@ -120,7 +105,7 @@ In summary:
 
 ---
 
-## 7. Setting the OpenCL Version
+## 6. Setting the OpenCL Version
 macOS only supports OpenCL 1.2. If you are using Khronos’s `opencl.hpp`, it is recommended to define the target version before including the header:
 ```cpp
 #define CL_HPP_TARGET_OPENCL_VERSION 120
@@ -131,7 +116,7 @@ This prevents the inclusion of symbols from OpenCL 2.x or 3.0, which could cause
 
 ---
 
-## 8. Compilation and Testing
+## 7. Compilation and Testing
 In your main.cpp (or another file), you can try the following simple program:
 ```cpp
 #include <iostream>
@@ -160,7 +145,7 @@ return 0;
 2. Click **Run (▶)** or choose **Product → Run**.
 3. If the code compiles successfully and the Console displays “Hello, OpenCL!” along with platform information, the setup is complete.
 
-### 8.1. (Optional) Setting a Custom Working Directory
+### 7.1. (Optional) Setting a Custom Working Directory
 
 If you need to load external files (like `.cl` kernels) at runtime, Xcode’s default working directory may not be where your files are located. You can:
 1. Go to **Product → Scheme → Edit Scheme…**.
@@ -169,14 +154,14 @@ If you need to load external files (like `.cl` kernels) at runtime, Xcode’s de
 4. This ensures that when your program runs, it can find files such as `simple_add.cl` using a relative path (e.g., "`simple_add.cl`" or "`Environment/simple_add.cl`").
 ---
 
-## 9. Limitations of Xcode for OpenCL Versions
+## 8. Limitations of Xcode for OpenCL Versions
 - macOS officially supports only up to OpenCL 1.2.
 - Khronos’s C++ wrappers (opencl.hpp, cl2.hpp) may default to OpenCL 2.0 or 3.0, so you need to manually specify `#define CL_HPP_TARGET_OPENCL_VERSION 120`.
 - Without these definitions, you may encounter compilation errors such as “Use of undeclared identifier”.
 
 ---
 
-## 10. FAQ and Additional Information
+## 9. FAQ and Additional Information
 #### Q1: Why does `#include <CL/opencl.hpp>` report “file not found”?
 Please check:
 1. Whether the Header Search Paths include `$(PROJECT_DIR)/CL` (or the corresponding path).
